@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="ko" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>4회차 인사이트Talk콘서트 | Copilot × Power Automate 업무 자동화</title>
+<meta name="description" content="4회차 인사이트Talk콘서트 - Copilot × Power Automate 업무 자동화. 2026년 10월 7일(수) 13:00~17:00, 마곡 LG사이언스파크 W10동 3층 교육장5(308호). 사전 신청 안내.">
+<style>
+:root {
+  color-scheme: light dark;
+  --c-bg: #f5f6fa;
+  --c-surface: #ffffff;
+  --c-surface-alt: #ebedf5;
+  --c-text: #0b0f1a;
+  --c-text-soft: #4b5169;
+  --c-border: #dcdfec;
+  --c-accent: #a50034;
+  --c-accent-2: #7b2ff7;
+  --c-on-accent: #ffffff;
+  --c-ink-1: #070a12;
+  --c-ink-2: #0b0f1a;
+  --c-ink-3: #141a2e;
+  --c-glow-1: #a50034;
+  --c-glow-2: #7b2ff7;
+  --c-glow-3: #1b2a6b;
+  --c-hero-text: #ffffff;
+  --c-hero-soft: #a9b0c7;
+  --c-hero-line: rgba(255, 255, 255, 0.16);
+  --c-chip: rgba(255, 255, 255, 0.08);
+  --c-shadow: 0 10px 30px rgba(11, 15, 26, 0.08);
+  --c-shadow-lg: 0 22px 60px rgba(11, 15, 26, 0.16);
+  --c-focus: #7b2ff7;
+  --radius-s: 10px;
+  --radius-m: 16px;
+  --radius-l: 26px;
+  --space-sec: clamp(4rem, 8vw, 7.5rem);
+  --maxw: 1180px;
+  --nav-h: 72px;
+  --font: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-num: ui-monospace, "SFMono-Regular", "Consolas", "Menlo", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --c-bg: #0b0f1a;
+    --c-surface: #131829;
+    --c-surface-alt: #0f1423;
+    --c-text: #eef0fa;
+    --c-text-soft: #a7aec8;
+    --c-border: #262d47;
+    --c-accent: #ff4d7d;
+    --c-accent-2: #a879ff;
+    --c-on-accent: #14030b;
+    --c-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+    --c-shadow-lg: 0 22px 60px rgba(0, 0, 0, 0.6);
+    --c-focus: #a879ff;
+  }
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-block-start: calc(var(--nav-h) + 8px); }
+body {
+  margin: 0;
+  font-family: var(--font);
+  background: var(--c-bg);
+  color: var(--c-text);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+h1, h2, h3, h4 { line-height: 1.2; margin-block: 0 0.5em; letter-spacing: -0.025em; }
+p { margin-block: 0 1em; }
+a { color: inherit; }
+img, svg { max-inline-size: 100%; }
+:focus-visible { outline: 3px solid var(--c-focus); outline-offset: 3px; border-radius: 6px; }
+.wrap { max-inline-size: var(--maxw); margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.2rem); }
+.skip {
+  position: absolute; inset-block-start: -100px; inset-inline-start: 1rem; z-index: 100;
+  background: var(--c-accent); color: var(--c-on-accent); padding: 0.6rem 1rem; border-radius: var(--radius-s);
+}
+.skip:focus { inset-block-start: 0.6rem; }
+/* NAV */
+.nav {
+  position: fixed; inset-block-start: 0; inset-inline: 0; z-index: 60;
+  background: transparent; border-block-end: 1px solid transparent;
+  transition: background-color 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+}
+.nav__inner { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-block-size: var(--nav-h); }
+.brand {
+  font-weight: 900; font-size: 1rem; letter-spacing: -0.02em; text-decoration: none;
+  color: var(--c-hero-text); display: inline-flex; align-items: center; gap: 0.55rem; transition: color 0.28s ease;
+}
+.brand__dot {
+  inline-size: 11px; block-size: 11px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--c-glow-1), var(--c-glow-2)); box-shadow: 0 0 14px var(--c-glow-1);
+}
+.nav__menu { display: flex; align-items: center; gap: clamp(0.4rem, 1.6vw, 1.5rem); list-style: none; margin: 0; padding: 0; }
+.nav__menu a {
+  position: relative; text-decoration: none; font-size: 0.9rem; font-weight: 700;
+  color: var(--c-hero-soft); padding-block: 0.5rem; transition: color 0.2s ease;
+}
+.nav__menu a::after {
+  content: ""; position: absolute; inset-block-end: 0; inset-inline-start: 0; inline-size: 0; block-size: 2px;
+  background: linear-gradient(90deg, var(--c-glow-1), var(--c-glow-2)); transition: inline-size 0.25s ease;
+}
+.nav__menu a:hover { color: var(--c-hero-text); }
+.nav__menu a:hover::after, .nav__menu a.is-active::after { inline-size: 100%; }
+.nav__menu a.is-active { color: var(--c-hero-text); }
+.nav__menu .is-cta {
+  background: var(--c-accent); color: var(--c-on-accent); padding: 0.55rem 1.25rem; border-radius: 999px;
+  font-weight: 800; box-shadow: 0 8px 24px color-mix(in srgb, var(--c-accent) 35%, transparent);
+}
+.nav__menu .is-cta::after { content: none; }
+.nav__menu .is-cta:hover { color: var(--c-on-accent); filter: brightness(1.08); }
+.nav__toggle {
+  display: none; background: var(--c-chip); border: 1px solid var(--c-hero-line); color: var(--c-hero-text);
+  border-radius: var(--radius-s); padding: 0.45rem 0.75rem; font: inherit; font-size: 0.85rem; font-weight: 800; cursor: pointer;
+}
+.nav.is-stuck {
+  background: color-mix(in srgb, var(--c-surface) 86%, transparent);
+  backdrop-filter: blur(16px) saturate(140%); border-block-end-color: var(--c-border); box-shadow: var(--c-shadow);
+}
+.nav.is-stuck .brand { color: var(--c-text); }
+.nav.is-stuck .nav__menu a { color: var(--c-text-soft); }
+.nav.is-stuck .nav__menu a:hover, .nav.is-stuck .nav__menu a.is-active { color: var(--c-text); }
+.nav.is-stuck .nav__menu .is-cta { color: var(--c-on-accent); }
+.nav.is-stuck .nav__toggle { color: var(--c-text); border-color: var(--c-border); background: transparent; }
+/* HERO */
+.hero {
+  position: relative; min-block-size: 100svh; display: flex; align-items: center; color: var(--c-hero-text);
+  background: radial-gradient(120% 90% at 50% 0%, var(--c-ink-3) 0%, var(--c-ink-2) 45%, var(--c-ink-1) 100%);
+  padding-block: calc(var(--nav-h) + 3rem) 5rem; overflow: hidden; isolation: isolate;
+}
+.hero__blobs { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.blob { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.5; mix-blend-mode: screen; }
+.blob--a {
+  inline-size: 46vmax; block-size: 46vmax; inset-block-start: -14vmax; inset-inline-start: -10vmax;
+  background: radial-gradient(circle, var(--c-glow-1) 0%, transparent 70%); animation: drift-a 18s ease-in-out infinite alternate;
+}
+.blob--b {
+  inline-size: 42vmax; block-size: 42vmax; inset-block-start: 6vmax; inset-inline-end: -12vmax;
+  background: radial-gradient(circle, var(--c-glow-2) 0%, transparent 70%); animation: drift-b 22s ease-in-out infinite alternate;
+}
+.blob--c {
+  inline-size: 40vmax; block-size: 40vmax; inset-block-end: -16vmax; inset-inline-start: 25%;
+  background: radial-gradient(circle, var(--c-glow-3) 0%, transparent 72%); animation: drift-c 26s ease-in-out infinite alternate;
+}
+@keyframes drift-a { from { transform: translate3d(0,0,0) scale(1); } to { transform: translate3d(6vmax,5vmax,0) scale(1.15); } }
+@keyframes drift-b { from { transform: translate3d(0,0,0) scale(1.1); } to { transform: translate3d(-7vmax,6vmax,0) scale(0.92); } }
+@keyframes drift-c { from { transform: translate3d(0,0,0) scale(0.95); } to { transform: translate3d(5vmax,-6vmax,0) scale(1.18); } }
+.hero__grid {
+  position: absolute; inset: 0; z-index: 0;
+  background-image: linear-gradient(var(--c-hero-line) 1px, transparent 1px), linear-gradient(90deg, var(--c-hero-line) 1px, transparent 1px);
+  background-size: 72px 72px; opacity: 0.35;
+  mask-image: radial-gradient(80% 70% at 50% 35%, #000 30%, transparent 100%); pointer-events: none;
+}
+.hero__art {
+  position: absolute; inset-block-start: 50%; inset-inline-end: -2%; transform: translateY(-50%);
+  inline-size: min(52%, 820px); z-index: 0; opacity: 0.6; pointer-events: none;
+  mask-image: linear-gradient(90deg, transparent 0%, #000 30%, #000 100%);
+}
+@media (max-width: 980px) { .hero__art { opacity: 0.22; inline-size: 95%; } }
+.hero__inner { position: relative; z-index: 1; inline-size: 100%; }
+.hero__badge {
+  display: inline-flex; align-items: center; gap: 0.55rem; border: 1px solid var(--c-hero-line);
+  background: var(--c-chip); backdrop-filter: blur(8px); border-radius: 999px; padding: 0.45rem 1rem;
+  font-size: 0.72rem; font-weight: 800; letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--c-hero-text); margin-block-end: clamp(1.2rem, 3vw, 2rem);
+}
+.hero__badge i {
+  inline-size: 7px; block-size: 7px; border-radius: 50%; background: var(--c-accent);
+  box-shadow: 0 0 12px var(--c-accent); animation: pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+.slogan {
+  margin: 0 0 clamp(1rem, 2.5vw, 1.6rem); font-size: clamp(2.6rem, 11vw, 7.5rem);
+  font-weight: 900; line-height: 0.94; letter-spacing: -0.045em; text-transform: uppercase;
+}
+.slogan span { display: block; }
+.slogan .is-outline { color: transparent; -webkit-text-stroke: 1.5px var(--c-hero-soft); }
+.slogan .is-grad {
+  background: linear-gradient(100deg, var(--c-glow-1) 0%, var(--c-glow-2) 55%, var(--c-hero-text) 110%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.hero__title { font-size: clamp(1.15rem, 3.2vw, 2rem); font-weight: 800; color: var(--c-hero-text); margin-block-end: 0.35rem; }
+.hero__sub { font-size: clamp(0.98rem, 2.2vw, 1.25rem); font-weight: 600; color: var(--c-hero-soft); margin-block-end: clamp(1.4rem, 3vw, 2rem); }
+.hero__meta {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem clamp(1rem, 3vw, 2rem);
+  margin: 0 0 clamp(2.2rem, 5vw, 3.2rem); padding: 0; list-style: none;
+  font-size: clamp(1.02rem, 1.5vw, 1.18rem); color: var(--c-hero-soft); row-gap: 0.9rem;
+}
+.hero__meta li {
+  display: flex; align-items: baseline; gap: 0.6rem;
+  padding-inline-end: clamp(1rem, 3vw, 2rem); border-inline-end: none;
+}
+.hero__meta li:last-child { border-inline-end: none; padding-inline-end: 0; }
+.hero__meta .is-break { flex-basis: 100%; border-inline-end: none; padding-inline-end: 0; }
+@media (max-width: 1080px) { .hero__meta li { flex-basis: 100%; border-inline-end: none; padding-inline-end: 0; } }
+.hero__meta b {
+  font-size: 0.8rem; font-weight: 900; letter-spacing: 0.16em; text-transform: uppercase; color: var(--c-accent);
+}
+.hero__meta span { color: var(--c-hero-text); font-weight: 700; }
+.countdown { display: flex; flex-wrap: wrap; align-items: stretch; gap: 0.6rem; margin: 0; }
+.cd-tile {
+  min-inline-size: 84px; padding: 0.7rem 1rem 0.6rem; border-radius: var(--radius-m);
+  background: var(--c-chip); border: 1px solid var(--c-hero-line); backdrop-filter: blur(10px); text-align: center;
+}
+.cd-tile strong {
+  display: block; font-family: var(--font-num); font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 900;
+  line-height: 1.1; color: var(--c-hero-text); font-variant-numeric: tabular-nums;
+}
+.cd-tile span {
+  display: block; font-size: 0.68rem; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: var(--c-hero-soft);
+}
+.cd-tile--lead strong {
+  background: linear-gradient(120deg, var(--c-glow-1), var(--c-glow-2));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.countdown__label { align-self: center; font-size: 0.88rem; color: var(--c-hero-soft); margin: 0; padding-inline-start: 0.4rem; }
+.scroll-hint {
+  position: absolute; inset-block-end: 1.6rem; inset-inline-start: 50%; transform: translateX(-50%); z-index: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 0.4rem; font-size: 0.64rem; font-weight: 800;
+  letter-spacing: 0.28em; text-transform: uppercase; color: var(--c-hero-soft); text-decoration: none;
+}
+.scroll-hint i { inline-size: 1px; block-size: 44px; background: linear-gradient(180deg, var(--c-hero-soft), transparent); animation: sink 2.2s ease-in-out infinite; }
+@keyframes sink {
+  0% { transform: scaleY(0.2); transform-origin: top; opacity: 0.2; }
+  50% { transform: scaleY(1); transform-origin: top; opacity: 1; }
+  100% { transform: scaleY(0.2); transform-origin: bottom; opacity: 0.2; }
+}
+/* SECTIONS */
+.section { padding-block: var(--space-sec); position: relative; }
+.section--alt { background: var(--c-surface-alt); }
+.section__head { max-inline-size: 760px; margin-block-end: clamp(2.2rem, 5vw, 3.4rem); }
+#apply .section__head { margin-block-end: clamp(1.2rem, 2.4vw, 1.6rem); }
+.eyebrow {
+  display: inline-block; text-transform: uppercase; letter-spacing: 0.26em; font-size: 0.7rem;
+  font-weight: 900; color: var(--c-accent); margin-block-end: 0.9rem;
+}
+.section__head h2 { font-size: clamp(1.75rem, 4.4vw, 3rem); font-weight: 900; margin-block-end: 0.6rem; }
+.section__head p { color: var(--c-text-soft); margin-block-end: 0; font-weight: 400; }
+.lead { font-size: clamp(1rem, 1.6vw, 1.1rem); }
+.reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22,1,0.36,1); }
+.reveal.is-in { opacity: 1; transform: none; }
+.grid { display: grid; gap: 1.25rem; }
+.grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.card {
+  background: var(--c-surface); border: 1px solid var(--c-border); border-radius: var(--radius-l);
+  padding: clamp(1.5rem, 2.8vw, 2.2rem); box-shadow: var(--c-shadow); text-align: start;
+}
+.card h3 { font-size: 1.2rem; }
+.card p { color: var(--c-text-soft); margin-block-end: 0; font-size: 0.96rem; }
+.card__num {
+  display: inline-flex; align-items: center; justify-content: center; inline-size: 44px; block-size: 44px;
+  border-radius: 14px; background: color-mix(in srgb, var(--c-accent) 14%, transparent); color: var(--c-accent);
+  font-family: var(--font-num); font-weight: 900; margin-block-end: 1rem;
+}
+/* PROGRAM */
+.pcard {
+  position: relative; overflow: hidden; padding-block-start: calc(clamp(1.5rem, 2.8vw, 2.2rem) + 6px);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.pcard::before {
+  content: ""; position: absolute; inset-block-start: 0; inset-inline: 0; block-size: 5px;
+  background: linear-gradient(90deg, var(--c-accent), var(--c-accent-2));
+  transform: scaleX(0.28); transform-origin: 0 50%; transition: transform 0.35s ease;
+}
+.pcard:hover, .pcard:focus-within {
+  transform: translateY(-6px); box-shadow: var(--c-shadow-lg);
+  border-color: color-mix(in srgb, var(--c-accent) 45%, var(--c-border));
+}
+.pcard:hover::before, .pcard:focus-within::before { transform: scaleX(1); }
+.pcard__top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-block-end: 1rem; }
+.pcard__idx { font-family: var(--font-num); font-size: 1.75rem; font-weight: 900; letter-spacing: -0.04em; color: color-mix(in srgb, var(--c-text) 22%, transparent); }
+.tag {
+  display: inline-block; font-size: 0.68rem; font-weight: 900; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--c-accent); background: color-mix(in srgb, var(--c-accent) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--c-accent) 28%, transparent); border-radius: 999px; padding: 0.28rem 0.8rem;
+}
+.pcard h3 { font-size: 1.18rem; margin-block-end: 0.5rem; }
+/* SCHEDULE */
+.table-scroll { overflow-x: auto; border-radius: var(--radius-l); border: 1px solid var(--c-border); background: var(--c-surface); box-shadow: var(--c-shadow); }
+table { inline-size: 100%; border-collapse: collapse; min-inline-size: 700px; }
+caption { text-align: start; padding: 1.2rem 1.4rem 0.9rem; font-weight: 800; font-size: 0.95rem; color: var(--c-text); }
+th, td { text-align: start; padding: 1rem 1.4rem; border-block-end: 1px solid var(--c-border); font-size: 0.95rem; vertical-align: middle; }
+thead th {
+  position: sticky; inset-block-start: 0; background: var(--c-surface-alt); font-size: 0.72rem;
+  text-transform: uppercase; letter-spacing: 0.16em; font-weight: 900; color: var(--c-text-soft); z-index: 1;
+}
+tbody tr { transition: background-color 0.2s ease; }
+tbody tr:nth-child(even) { background: color-mix(in srgb, var(--c-surface-alt) 55%, transparent); }
+tbody tr:hover { background: color-mix(in srgb, var(--c-accent) 7%, transparent); }
+tbody tr:last-child td { border-block-end: none; }
+td:first-child { font-weight: 800; white-space: nowrap; color: var(--c-accent); }
+td:nth-child(2) { font-family: var(--font-num); font-variant-numeric: tabular-nums; font-weight: 700; white-space: nowrap; color: var(--c-text-soft); }
+.note { font-size: 0.88rem; color: var(--c-text-soft); margin-block-start: 1.1rem; }
+/* SPEAKER */
+.speaker { display: grid; grid-template-columns: 210px 1fr; padding: 0; overflow: hidden; }
+.speaker__portrait {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.9rem;
+  padding: 2.4rem 1rem; background: #0a0d18; text-align: center;
+}
+.sp-line { inline-size: 42px; block-size: 3px; border-radius: 3px; background: #ff4d7d; }
+.speaker__body { padding: clamp(1.4rem, 2.6vw, 2rem); }
+.speaker dl { margin: 0; display: grid; grid-template-columns: 5.4rem 1fr; gap: 0.7rem 1.2rem; font-size: 0.93rem; }
+.speaker dt { font-weight: 800; color: var(--c-text-soft); font-size: 0.85rem; white-space: nowrap; }
+.speaker dd { margin: 0; }
+/* FAQ */
+.faq { display: grid; gap: 0.7rem; }
+.faq__item { background: var(--c-surface); border: 1px solid var(--c-border); border-radius: var(--radius-m); overflow: hidden; transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+.faq__item.is-open { border-color: color-mix(in srgb, var(--c-accent) 45%, var(--c-border)); box-shadow: var(--c-shadow); }
+.faq h3 { margin: 0; font-size: 1rem; }
+.faq__q {
+  inline-size: 100%; font: inherit; font-weight: 700; text-align: start; background: transparent; color: var(--c-text);
+  border: none; padding: 1.15rem clamp(1rem, 2.4vw, 1.6rem); cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+}
+.faq__icon {
+  position: relative; flex: none; inline-size: 26px; block-size: 26px; border-radius: 50%;
+  background: color-mix(in srgb, var(--c-accent) 12%, transparent); transition: transform 0.3s ease, background-color 0.3s ease;
+}
+.faq__icon::before, .faq__icon::after {
+  content: ""; position: absolute; inset-block-start: 50%; inset-inline-start: 50%; inline-size: 12px; block-size: 2px;
+  border-radius: 2px; background: var(--c-accent); transform: translate(-50%, -50%); transition: opacity 0.3s ease;
+}
+.faq__icon::after { transform: translate(-50%, -50%) rotate(90deg); }
+.faq__q[aria-expanded="true"] .faq__icon { transform: rotate(180deg); background: color-mix(in srgb, var(--c-accent) 22%, transparent); }
+.faq__q[aria-expanded="true"] .faq__icon::after { opacity: 0; }
+.faq__a { max-block-size: 0; overflow: hidden; visibility: hidden; color: var(--c-text-soft); font-size: 0.95rem; transition: max-block-size 0.35s ease, visibility 0s linear 0.35s; }
+.faq__item.is-open .faq__a { visibility: visible; transition-delay: 0s; }
+.faq__a > div { padding: 0 clamp(1rem, 2.4vw, 1.6rem) 1.3rem; }
+.faq__a p { margin-block-end: 0; }
+/* APPLY */
+.apply-card {
+  max-inline-size: 880px; margin-inline: auto; text-align: center; padding: clamp(1.3rem, 2.4vw, 1.8rem);
+  border: 1.5px solid color-mix(in srgb, var(--c-accent) 42%, transparent);
+  box-shadow: var(--c-shadow), 0 0 0 4px color-mix(in srgb, var(--c-accent) 7%, transparent);
+}
+#apply .section__head p.apply-when {
+  margin: 0.9rem 0 0; font-size: clamp(1rem, 2vw, 1.15rem); font-weight: 800; color: var(--c-text);
+}
+#apply .section__head p.apply-when strong { font-weight: 900; color: var(--c-accent); letter-spacing: -0.01em; }
+#apply .section__head p.apply-when .apply-when__muted { font-weight: 600; color: var(--c-text-soft); }
+.form-embed {
+  position: relative; inline-size: 100%; block-size: min(780px, 88vh);
+  border: 1px solid var(--c-border); border-radius: var(--radius-m); overflow: hidden;
+  background: #fff; margin-block-end: 0.8rem; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.4);
+}
+.form-embed iframe { inline-size: 100%; block-size: 100%; border: none; display: block; }
+@media (max-width: 760px) { .form-embed { block-size: min(620px, 82vh); } }
+.hidden { display: none; }
+/* FLOATING PROMO */
+.promo {
+  position: fixed; inset-block-end: 1.2rem; inset-inline-end: 1.2rem; z-index: 70;
+  inline-size: min(320px, calc(100vw - 2rem)); border-radius: var(--radius-l);
+  background: linear-gradient(160deg, var(--c-ink-3), var(--c-ink-1));
+  border: 1px solid color-mix(in srgb, #ffffff 16%, transparent); color: var(--c-hero-text);
+  box-shadow: var(--c-shadow-lg); padding: 1.2rem 1.2rem 0.6rem; overflow: hidden;
+}
+.promo::before {
+  content: ""; position: absolute; inset-block-start: -40%; inset-inline-end: -30%; inline-size: 200px; block-size: 200px;
+  border-radius: 50%; background: radial-gradient(circle, var(--c-glow-1), transparent 70%); opacity: 0.55; pointer-events: none;
+}
+.promo__head { position: relative; font-size: 0.68rem; font-weight: 900; letter-spacing: 0.24em; text-transform: uppercase; color: var(--c-hero-soft); margin-block-end: 0.5rem; }
+.promo h2 { position: relative; font-size: 1.05rem; margin-block-end: 0.9rem; }
+.promo ol { position: relative; list-style: none; margin: 0 0 1rem; padding: 0; display: grid; gap: 0.5rem; font-size: 0.86rem; color: var(--c-hero-soft); }
+.promo ol li { display: flex; gap: 0.6rem; align-items: baseline; }
+.promo ol b {
+  font-size: 0.64rem; font-weight: 900; letter-spacing: 0.12em; color: var(--c-hero-text);
+  background: var(--c-chip); border: 1px solid var(--c-hero-line); border-radius: 999px; padding: 0.1rem 0.5rem; flex: none;
+}
+.promo__cta {
+  position: relative; display: block; text-align: center; text-decoration: none; font-weight: 800; font-size: 0.92rem;
+  border-radius: 999px; padding: 0.7rem 1rem; background: linear-gradient(120deg, var(--c-glow-1), var(--c-glow-2)); color: var(--c-hero-text);
+}
+.promo__foot {
+  position: relative; display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
+  margin-block-start: 0.4rem; border-block-start: 1px solid var(--c-hero-line); padding-block: 0.55rem;
+}
+.promo__foot button { font: inherit; font-size: 0.78rem; font-weight: 700; background: transparent; border: none; color: var(--c-hero-soft); cursor: pointer; padding: 0.2rem 0.3rem; }
+.promo__foot button:hover { color: var(--c-hero-text); }
+/* FOOTER */
+.footer { background: var(--c-ink-1); color: var(--c-hero-soft); padding-block: 3.5rem; font-size: 0.9rem; }
+.footer strong { color: var(--c-hero-text); display: block; font-size: 1.05rem; margin-block-end: 0.8rem; }
+.footer p { margin-block-end: 0.35rem; }
+.footer a { color: var(--c-hero-text); }
+.footer__bottom { margin-block-start: 1.8rem; padding-block-start: 1.2rem; border-block-start: 1px solid var(--c-hero-line); font-size: 0.84rem; }
+@media (max-width: 980px) {
+  .grid--3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .speaker { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  .grid--3 { grid-template-columns: 1fr; }
+  .nav__toggle { display: inline-block; }
+  .nav__menu {
+    display: none; position: absolute; inset-inline: 0; inset-block-start: var(--nav-h); flex-direction: column;
+    align-items: stretch; gap: 0; background: var(--c-surface); border-block-end: 1px solid var(--c-border);
+    box-shadow: var(--c-shadow); padding: 0.5rem 1.2rem 1.2rem;
+  }
+  .nav__menu.is-open { display: flex; }
+  .nav__menu li { border-block-end: 1px solid var(--c-border); }
+  .nav__menu li:last-child { border-block-end: none; padding-block-start: 0.8rem; }
+  .nav__menu a { display: block; padding-block: 0.85rem; color: var(--c-text-soft); }
+  .nav__menu .is-cta { text-align: center; }
+  .hero__meta li { border-inline-end: none; padding-inline-end: 0; inline-size: 100%; }
+  .speaker dl { grid-template-columns: 1fr; gap: 0.15rem; }
+  .scroll-hint { display: none; }
+}
+@media (max-width: 400px) { .cd-tile { min-inline-size: 72px; padding-inline: 0.7rem; } }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .blob, .hero__badge i, .scroll-hint i { animation: none; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  * { transition-duration: 0.01ms !important; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">본문 바로가기</a>
+<header class="nav" id="siteNav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="#top"><span class="brand__dot" aria-hidden="true"></span>고객가치혁신부문</a>
+    <button class="nav__toggle" type="button" id="navToggle" aria-expanded="false" aria-controls="navMenu">메뉴</button>
+    <nav aria-label="주요 메뉴">
+      <ul class="nav__menu" id="navMenu">
+        <li><a href="#about">소개</a></li>
+        <li><a href="#program">프로그램</a></li>
+        <li><a href="#schedule">타임테이블</a></li>
+        <li><a href="#speakers">강사</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a class="is-cta" href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=5M1pUCpkwEWAlNDC3sEL4yAbZeaAS4NPrxlq0d7JybJUQk1INjJBOEQ5VDRPM002MjUySkw3T0dONi4u" target="_blank" rel="noopener noreferrer">참가신청</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<main id="main">
+  <section class="hero" id="top">
+    <div class="hero__blobs" aria-hidden="true">
+      <span class="blob blob--a"></span>
+      <span class="blob blob--b"></span>
+      <span class="blob blob--c"></span>
+    </div>
+    <div class="hero__grid" aria-hidden="true"></div>
+    <svg class="hero__art" viewBox="0 0 640 420" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="gA" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#ff4d7d"/><stop offset="100%" stop-color="#a879ff"/>
+        </linearGradient>
+      </defs>
+      <rect x="60" y="70" width="230" height="280" rx="22" fill="#ffffff" fill-opacity="0.05" stroke="url(#gA)" stroke-width="1.6"/>
+      <rect x="92" y="108" width="96" height="9" rx="4.5" fill="#ff4d7d" fill-opacity="0.85"/>
+      <rect x="92" y="146" width="166" height="26" rx="13" fill="#ffffff" fill-opacity="0.1"/>
+      <rect x="92" y="188" width="166" height="26" rx="13" fill="#ffffff" fill-opacity="0.1"/>
+      <rect x="92" y="230" width="166" height="26" rx="13" fill="#ffffff" fill-opacity="0.1"/>
+      <rect x="92" y="278" width="26" height="26" rx="7" fill="none" stroke="#ff4d7d" stroke-width="1.8"/>
+      <path d="M98 291l6 6 12-12" stroke="#ff4d7d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="132" y="286" width="90" height="9" rx="4.5" fill="#ffffff" fill-opacity="0.2"/>
+      <path d="M290 210h60" stroke="url(#gA)" stroke-width="1.6"/>
+      <circle cx="356" cy="210" r="6" fill="#a879ff"/>
+      <rect x="378" y="180" width="60" height="60" rx="16" fill="#ffffff" fill-opacity="0.05" stroke="url(#gA)" stroke-width="1.6"/>
+      <circle cx="408" cy="210" r="11" fill="none" stroke="#a879ff" stroke-width="2"/>
+      <circle cx="408" cy="210" r="3.4" fill="#a879ff"/>
+      <path d="M438 210h34M456 210v-90h44M456 210v90h44" stroke="url(#gA)" stroke-width="1.5" stroke-linecap="round"/>
+      <rect x="500" y="92" width="72" height="56" rx="14" fill="#ffffff" fill-opacity="0.05" stroke="#ff4d7d" stroke-width="1.5"/>
+      <path d="M516 112l20 14 20-14" stroke="#ff4d7d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect x="516" y="108" width="40" height="28" rx="5" fill="none" stroke="#ff4d7d" stroke-width="1.6"/>
+      <rect x="500" y="182" width="72" height="56" rx="14" fill="#ffffff" fill-opacity="0.05" stroke="#a879ff" stroke-width="1.5"/>
+      <circle cx="528" cy="203" r="7" fill="none" stroke="#a879ff" stroke-width="1.8"/>
+      <path d="M514 224c0-8 7-12 14-12s14 4 14 12" stroke="#a879ff" stroke-width="1.8" stroke-linecap="round"/>
+      <circle cx="548" cy="205" r="5.4" fill="none" stroke="#a879ff" stroke-width="1.6"/>
+      <rect x="500" y="272" width="72" height="56" rx="14" fill="#ffffff" fill-opacity="0.05" stroke="#7b9bff" stroke-width="1.5"/>
+      <rect x="518" y="288" width="36" height="24" rx="4" fill="none" stroke="#7b9bff" stroke-width="1.6"/>
+      <path d="M526 296h20M526 303h14" stroke="#7b9bff" stroke-width="1.8" stroke-linecap="round"/>
+      <circle cx="500" cy="120" r="4" fill="#ff4d7d"/>
+      <circle cx="500" cy="210" r="4" fill="#a879ff"/>
+      <circle cx="500" cy="300" r="4" fill="#7b9bff"/>
+      <path d="M586 120h26M586 210h26M586 300h26" stroke="url(#gA)" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M606 114l8 6-8 6M606 204l8 6-8 6M606 294l8 6-8 6" stroke="url(#gA)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div class="wrap hero__inner">
+      <span class="hero__badge"><i aria-hidden="true"></i>4회차 인사이트Talk콘서트</span>
+      <h1 class="slogan">
+        <span>ASK.</span>
+        <span class="is-outline">AUTOMATE.</span>
+        <span class="is-grad">ACCELERATE.</span>
+      </h1>
+      <p class="hero__title">Copilot &times; Power Automate 업무 자동화</p>
+      <p class="hero__sub">묻고, 자동화하고, 일하는 속도를 바꾸다</p>
+      <ul class="hero__meta">
+        <li><b>일시</b><span>2026. 10. 7 (수) 13:00 ~ 17:00</span></li>
+        <li><b>장소</b><span>마곡 LG사이언스파크 W10동 3층 교육장5 (308호)</span></li>
+        <li class="is-break"><b>신청</b><span>2026. 9. 21 (월) ~ 10. 2 (금) · 현장 선착순 30명</span></li>
+      </ul>
+      <div class="countdown" id="countdown">
+        <div class="cd-tile cd-tile--lead"><strong id="countdownDays">--</strong><span>일</span></div>
+        <div class="cd-tile"><strong id="countdownHours">--</strong><span>시</span></div>
+        <div class="cd-tile"><strong id="countdownMinutes">--</strong><span>분</span></div>
+        <p class="countdown__label" id="countdownLabel">일 남았습니다</p>
+      </div>
+    </div>
+    <a class="scroll-hint" href="#about"><span>Scroll</span><i aria-hidden="true"></i></a>
+  </section>
+
+  <section class="section" id="about">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">About</span>
+        <h2>반복 업무를 흐름으로 바꾸는 4시간</h2>
+        <p class="lead">Outlook·Teams·Forms 기반의 반복 업무를 직접 자동화해 보는 <strong>4시간 실습형 과정</strong>입니다.</p>
+      </div>
+      <div class="grid grid--3">
+        <article class="card reveal">
+          <span class="card__num" aria-hidden="true">01</span>
+          <h3>기본기부터 확실하게</h3>
+          <p>트리거·액션·동적 콘텐츠 등 Power Automate의 구조를 이해하고, 흐름을 직접 만들고 저장·테스트하는 것까지 익힙니다.</p>
+        </article>
+        <article class="card reveal">
+          <span class="card__num" aria-hidden="true">02</span>
+          <h3>Copilot 판단, Automate 실행</h3>
+          <p>메일을 Copilot이 정리하고 Power Automate가 업무로 등록합니다. 두 도구를 엮어 쓰는 방식을 시연으로 확인합니다.</p>
+        </article>
+        <article class="card reveal">
+          <span class="card__num" aria-hidden="true">03</span>
+          <h3>우리 팀 업무로 바로 연결</h3>
+          <p>공지·안내·리마인드 등 누구나 하는 반복 업무를 다룹니다. 마지막 시간에 팀별 자동화 후보를 함께 도출합니다.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt" id="program">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">Program</span>
+        <h2>이번 차수에서 다루는 6가지</h2>
+        <p>개념 이해 → 시연 → 실습 완주 순으로, 4시간 안에 흐름 하나를 끝까지 만들어 봅니다.</p>
+      </div>
+      <div class="grid grid--3">
+        <article class="card pcard reveal">
+          <div class="pcard__top"><span class="pcard__idx" aria-hidden="true">01</span><span class="tag">Basic</span></div>
+          <h3>Power Automate 구조 이해</h3>
+          <p>트리거·액션·동적 콘텐츠 개념을 잡고, 흐름 생성·저장·테스트까지 진행합니다.</p>
+        </article>
+        <article class="card pcard reveal">
+          <div class="pcard__top"><span class="pcard__idx" aria-hidden="true">02</span><span class="tag">Demo</span></div>
+          <h3>Copilot &times; Automate 연계</h3>
+          <p>Outlook 메일을 Copilot이 정리하고 Planner에 업무로 자동 등록하는 흐름을 시연합니다.</p>
+        </article>
+        <article class="card pcard reveal">
+          <div class="pcard__top"><span class="pcard__idx" aria-hidden="true">03</span><span class="tag">Hands-on</span></div>
+          <h3>Outlook 메일 자동 발송</h3>
+          <p>일정 기반 트리거로 정기 안내와 개인별 실적 메일을 자동 발송하는 흐름을 직접 만듭니다.</p>
+        </article>
+        <article class="card pcard reveal">
+          <div class="pcard__top"><span class="pcard__idx" aria-hidden="true">04</span><span class="tag">Demo</span></div>
+          <h3>Forms → 메일 → 명단 기록</h3>
+          <p>신청 응답이 들어오면 확인 메일을 보내고 명단을 자동 기록하는 과정을 시연합니다.</p>
+        </article>
+        <article class="card pcard reveal">
+          <div class="pcard__top"><span class="pcard__idx" aria-hidden="true">05</span><span class="tag">Hands-on</span></div>
+          <h3>Teams 자동 공지 &amp; 응답 수집</h3>
+          <p>조건에 따라 Teams 채널에 공지를 게시하고 확인 결과를 수집·기록합니다.</p>
+        </article>
+        <article class="card pcard reveal">
+          <div class="pcard__top"><span class="pcard__idx" aria-hidden="true">06</span><span class="tag">Apply</span></div>
+          <h3>리마인드 자동화 &amp; 적용</h3>
+          <p>미응답자 자동 리마인드와 이력 기록을 확인하고, 팀별 자동화 후보를 도출합니다.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="schedule">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">Schedule</span>
+        <h2>당일 진행 순서</h2>
+        <p>4시간 / 13:00~17:00 · 실습 2개 + 시연 3개로 구성된 과정입니다.</p>
+      </div>
+      <div class="table-scroll reveal">
+        <table>
+          <caption>2026. 10. 7 (수) · 마곡 LG사이언스파크 W10동 3층 교육장5 (308호)</caption>
+          <thead>
+            <tr><th scope="col">교시</th><th scope="col">시간</th><th scope="col">내용</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1교시</td>
+              <td>13:00~14:00</td>
+              <td>Power Automate 구조 이해 (트리거·액션·동적 콘텐츠) / Outlook 메일 → Copilot 정리 → Planner 업무 등록</td>
+            </tr>
+            <tr>
+              <td>2교시</td>
+              <td>14:00~15:00</td>
+              <td>Outlook 정기 안내 및 개인별 실적 메일 자동 발송</td>
+            </tr>
+            <tr>
+              <td>3교시</td>
+              <td>15:00~16:00</td>
+              <td>Forms 신청 → 확인 메일 → 명단 기록 / Teams 채널 자동 공지 및 확인 결과 수집</td>
+            </tr>
+            <tr>
+              <td>4교시</td>
+              <td>16:00~17:00</td>
+              <td>명단 기준 미응답자 리마인드 및 후속 안내 / 흐름 수정·오류 점검, 자동화 후보 도출, Q&amp;A</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">※ 실습이 포함된 과정으로 개인 노트북 지참을 권장합니다. (사내 M365 계정 로그인 필요)</p>
+    </div>
+  </section>
+
+  <section class="section section--alt" id="speakers">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">Speaker</span>
+        <h2>강사 소개</h2>
+        <p>Microsoft 공인교육센터의 공인강사가 Power Automate 교육을 진행 합니다.</p>
+      </div>
+      <article class="card speaker reveal">
+        <div class="speaker__portrait">
+          <p style="font-size:38px;color:#ffffff;font-weight:900;margin:0;line-height:1.1;letter-spacing:-0.03em;">김누리</p>
+          <span class="sp-line" aria-hidden="true"></span>
+          <p style="font-size:14px;color:#e6e9f5;font-weight:700;margin:0;line-height:1.6;">Microsoft 공인강사<br>㈜한국소프트웨어서비스</p>
+        </div>
+        <div class="speaker__body">
+          <dl>
+            <dt>강의 분야</dt>
+            <dd>MS365 Copilot 및 Copilot Studio, 클라우드 인프라 설계·운영, Kubernetes·Docker, DevOps 기초</dd>
+            <dt>주요 경력</dt>
+            <dd>클라우드 및 Kubernetes 교육콘텐츠 개발, NHN Cloud 클라우드 기술강사, NIT Services(NAVER 계열사) 클라우드 운영 엔지니어, 기업 및 공공기관 대상 클라우드 및 Kubernetes 실무 교육 진행</dd>
+            <dt>강의 이력</dt>
+            <dd>LG화학, 롯데케미칼, SK에코플랜트, 현대모비스, 신한투자증권, 한국철도공사(KORAIL) 등</dd>
+            <dt>보유 자격</dt>
+            <dd>AWS Certified Cloud Practitioner, CKA·CKAD·KCSA·KCNA (The Linux Foundation)</dd>
+          </dl>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="apply">
+    <div class="wrap">
+      <div class="section__head reveal" style="margin-inline:auto;text-align:center;">
+        <span class="eyebrow">Apply</span>
+        <h2>참가 신청하기</h2>
+        <p>참가 신청은 Microsoft Forms를 통해 접수됩니다.</p>
+        <p class="apply-when">신청기간 <strong>2026. 09. 21.(월) ~ 10. 02.(금)</strong><span class="apply-when__muted"> · 현장 선착순 30명</span></p>
+      </div>
+      <div class="card apply-card reveal">
+        <div class="form-embed">
+          <iframe
+            src="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=5M1pUCpkwEWAlNDC3sEL4yAbZeaAS4NPrxlq0d7JybJUQk1INjJBOEQ5VDRPM002MjUySkw3T0dONi4u&amp;embed=true"
+            title="4회차 인사이트Talk콘서트 참가 신청서"
+            frameborder="0" marginwidth="0" marginheight="0"
+            allowfullscreen webkitallowfullscreen mozallowfullscreen msallowfullscreen></iframe>
+        </div>
+        <p class="note">※ 화면이 보이지 않으면 <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=5M1pUCpkwEWAlNDC3sEL4yAbZeaAS4NPrxlq0d7JybJUQk1INjJBOEQ5VDRPM002MjUySkw3T0dONi4u" target="_blank" rel="noopener noreferrer"><strong>새 창에서 신청하기</strong></a>를 이용해 주세요.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt" id="faq">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <span class="eyebrow">FAQ</span>
+        <h2>자주 묻는 질문</h2>
+        <p>궁금한 점이 해결되지 않으면 아래 문의처로 연락 주세요.</p>
+      </div>
+      <div class="faq">
+        <div class="faq__item reveal">
+          <h3><button class="faq__q" type="button" aria-expanded="false" aria-controls="faq1" id="faqq1">신청 대상은 누구인가요?<span class="faq__icon" aria-hidden="true"></span></button></h3>
+          <div class="faq__a" id="faq1" role="region" aria-labelledby="faqq1"><div><p>고객가치혁신부문 구성원이라면 누구나 신청하실 수 있습니다. 현장 참석은 선착순 30명으로 운영됩니다.</p></div></div>
+        </div>
+        <div class="faq__item reveal">
+          <h3><button class="faq__q" type="button" aria-expanded="false" aria-controls="faq2" id="faqq2">사전 지식이 필요한가요?<span class="faq__icon" aria-hidden="true"></span></button></h3>
+          <div class="faq__a" id="faq2" role="region" aria-labelledby="faqq2"><div><p>아니요. Power Automate의 구조(트리거·액션·동적 콘텐츠)부터 다루므로 처음 접하는 분도 따라오실 수 있습니다. 다만 M365 기본 활용 경험이 있으면 더 도움이 됩니다.</p></div></div>
+        </div>
+        <div class="faq__item reveal">
+          <h3><button class="faq__q" type="button" aria-expanded="false" aria-controls="faq3" id="faqq3">노트북 등 준비할 것이 있나요?<span class="faq__icon" aria-hidden="true"></span></button></h3>
+          <div class="faq__a" id="faq3" role="region" aria-labelledby="faqq3"><div><p>실습 2개를 직접 완주하는 과정이므로 개인 노트북 지참을 권장합니다. 실습 시 사내 M365 계정으로 로그인이 필요합니다.</p></div></div>
+        </div>
+        <div class="faq__item reveal">
+          <h3><button class="faq__q" type="button" aria-expanded="false" aria-controls="faq4" id="faqq4">온라인으로도 참석할 수 있나요?<span class="faq__icon" aria-hidden="true"></span></button></h3>
+          <div class="faq__a" id="faq4" role="region" aria-labelledby="faqq4"><div><p>오프라인 참석과 함께 온라인 중계를 운영할 예정입니다. 다만 실습 지원은 현장 참석자를 중심으로 이루어지므로, 직접 흐름을 만들어 보고 싶으시다면 현장 참석을 권장합니다. 접속 정보는 신청자에게 별도 안내드립니다.</p></div></div>
+        </div>
+        <div class="faq__item reveal">
+          <h3><button class="faq__q" type="button" aria-expanded="false" aria-controls="faq5" id="faqq5">신청한 내용을 수정하려면 어떻게 하나요?<span class="faq__icon" aria-hidden="true"></span></button></h3>
+          <div class="faq__a" id="faq5" role="region" aria-labelledby="faqq5"><div><p>동일한 정보로 다시 제출해 주시면 마지막 제출 내용으로 반영됩니다. 취소나 추가 확인이 필요하시면 아래 문의처로 연락 주세요.</p></div></div>
+        </div>
+        <div class="faq__item reveal">
+          <h3><button class="faq__q" type="button" aria-expanded="false" aria-controls="faq6" id="faqq6">문의는 어디로 하면 되나요?<span class="faq__icon" aria-hidden="true"></span></button></h3>
+          <div class="faq__a" id="faq6" role="region" aria-labelledby="faqq6"><div><p>고객가치혁신EXG팀 김성은 책임 / <a href="mailto:sungeun0601.kim@lge.com">sungeun0601.kim@lge.com</a> 으로 문의해 주세요.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<aside class="promo" id="promo" aria-label="인사이트Talk콘서트 참가 신청 안내">
+  <p class="promo__head">Pre-registration</p>
+  <h2>인사이트Talk콘서트 참가 신청</h2>
+  <ol>
+    <li><b>STEP 1</b><span>본 페이지에서 프로그램 확인</span></li>
+    <li><b>STEP 2</b><span>10/2(금)까지 신청서 제출</span></li>
+    <li><b>STEP 3</b><span>10/7(수) 13시 교육 참여</span></li>
+  </ol>
+  <a class="promo__cta" href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=5M1pUCpkwEWAlNDC3sEL4yAbZeaAS4NPrxlq0d7JybJUQk1INjJBOEQ5VDRPM002MjUySkw3T0dONi4u" target="_blank" rel="noopener noreferrer" id="promoCta">신청하러 가기</a>
+  <div class="promo__foot">
+    <button type="button" id="promoToday">오늘 하루 보지 않기</button>
+    <button type="button" id="promoClose">닫기</button>
+  </div>
+</aside>
+<footer class="footer">
+  <div class="wrap">
+    <strong>4회차 인사이트Talk콘서트 | Copilot &times; Power Automate 업무 자동화</strong>
+    <p>일시 : 2026. 10. 7 (수) 13:00~17:00 / 장소 : 마곡 LG사이언스파크 W10동 3층 교육장5 (308호)</p>
+    <p>문의 : 고객가치혁신EXG팀 김성은 책임 / <a href="mailto:sungeun0601.kim@lge.com">sungeun0601.kim@lge.com</a></p>
+    <p class="footer__bottom">&copy; 2026 Insight Talk Concert. All rights reserved.</p>
+  </div>
+</footer>
+<script>
+(function () {
+  "use strict";
+  var EVENT_DATE = new Date(2026, 9, 7, 13, 0, 0);
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function pad(n) { return ("0" + n).slice(-2); }
+  function initCountdown() {
+    var daysEl = document.getElementById("countdownDays");
+    var hoursEl = document.getElementById("countdownHours");
+    var minsEl = document.getElementById("countdownMinutes");
+    var labelEl = document.getElementById("countdownLabel");
+    if (!daysEl || !labelEl) { return; }
+    var eventDay = new Date(2026, 9, 7);
+    function tick() {
+      var now = new Date();
+      var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      var diff = Math.round((eventDay - today) / 86400000);
+      var ms = EVENT_DATE - now;
+      if (diff > 0) {
+        daysEl.textContent = String(diff);
+        if (hoursEl) { hoursEl.textContent = pad(Math.max(0, Math.floor(ms / 3600000) % 24)); }
+        if (minsEl) { minsEl.textContent = pad(Math.max(0, Math.floor(ms / 60000) % 60)); }
+        labelEl.textContent = "일 남았습니다 (2026. 10. 7 기준)";
+      } else if (diff === 0) {
+        daysEl.textContent = "D-DAY";
+        if (hoursEl) { hoursEl.textContent = "00"; }
+        if (minsEl) { minsEl.textContent = "00"; }
+        labelEl.textContent = "오늘 교육이 진행됩니다";
+      } else {
+        daysEl.textContent = "종료";
+        if (hoursEl) { hoursEl.textContent = "--"; }
+        if (minsEl) { minsEl.textContent = "--"; }
+        labelEl.textContent = "교육이 종료되었습니다";
+      }
+    }
+    tick();
+    window.setInterval(tick, 30000);
+  }
+  function initNav() {
+    var nav = document.getElementById("siteNav");
+    var toggle = document.getElementById("navToggle");
+    var menu = document.getElementById("navMenu");
+    if (nav) {
+      var onScroll = function () { nav.classList.toggle("is-stuck", window.scrollY > 40); };
+      onScroll();
+      window.addEventListener("scroll", onScroll, { passive: true });
+    }
+    if (toggle && menu) {
+      toggle.addEventListener("click", function () {
+        var open = menu.classList.toggle("is-open");
+        toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+      menu.addEventListener("click", function (e) {
+        if (e.target && e.target.tagName === "A") {
+          menu.classList.remove("is-open");
+          toggle.setAttribute("aria-expanded", "false");
+        }
+      });
+    }
+  }
+  function initSpy() {
+    var links = document.querySelectorAll(".nav__menu a[href^='#']");
+    if (!links.length || !("IntersectionObserver" in window)) { return; }
+    var map = {};
+    Array.prototype.forEach.call(links, function (a) {
+      var id = a.getAttribute("href").slice(1);
+      var target = document.getElementById(id);
+      if (target) { map[id] = a; }
+    });
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          Array.prototype.forEach.call(links, function (a) { a.classList.remove("is-active"); });
+          var active = map[entry.target.id];
+          if (active) { active.classList.add("is-active"); }
+        }
+      });
+    }, { rootMargin: "-45% 0px -50% 0px", threshold: 0 });
+    Object.keys(map).forEach(function (id) { observer.observe(document.getElementById(id)); });
+  }
+  function initReveal() {
+    var items = document.querySelectorAll(".reveal");
+    if (reduceMotion || !("IntersectionObserver" in window)) {
+      Array.prototype.forEach.call(items, function (el) { el.classList.add("is-in"); });
+      return;
+    }
+    var observer = new IntersectionObserver(function (entries, obs) {
+      entries.forEach(function (entry, i) {
+        if (entry.isIntersecting) {
+          var el = entry.target;
+          window.setTimeout(function () { el.classList.add("is-in"); }, i * 70);
+          obs.unobserve(el);
+        }
+      });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+    Array.prototype.forEach.call(items, function (el) { observer.observe(el); });
+  }
+  function initFaq() {
+    var buttons = document.querySelectorAll(".faq__q");
+    Array.prototype.forEach.call(buttons, function (btn) {
+      btn.addEventListener("click", function () {
+        var panel = document.getElementById(btn.getAttribute("aria-controls"));
+        var expanded = btn.getAttribute("aria-expanded") === "true";
+        btn.setAttribute("aria-expanded", expanded ? "false" : "true");
+        var item = btn.closest(".faq__item");
+        if (item) { item.classList.toggle("is-open", !expanded); }
+        if (panel) { panel.style.maxBlockSize = expanded ? "0px" : panel.scrollHeight + "px"; }
+      });
+    });
+    window.addEventListener("resize", function () {
+      Array.prototype.forEach.call(buttons, function (btn) {
+        if (btn.getAttribute("aria-expanded") === "true") {
+          var panel = document.getElementById(btn.getAttribute("aria-controls"));
+          if (panel) { panel.style.maxBlockSize = panel.scrollHeight + "px"; }
+        }
+      });
+    });
+  }
+  function initPromo() {
+    var promo = document.getElementById("promo");
+    if (!promo) { return; }
+    function dismiss() { promo.classList.add("hidden"); }
+    var close = document.getElementById("promoClose");
+    var today = document.getElementById("promoToday");
+    var cta = document.getElementById("promoCta");
+    if (close) { close.addEventListener("click", dismiss); }
+    if (today) { today.addEventListener("click", dismiss); }
+    if (cta) { cta.addEventListener("click", dismiss); }
+  }
+  document.addEventListener("DOMContentLoaded", function () {
+    initCountdown();
+    initNav();
+    initSpy();
+    initReveal();
+    initFaq();
+    initPromo();
+  });
+})();
+</script>
+</body>
+</html>
